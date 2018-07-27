@@ -1,0 +1,21 @@
+apply from: '../common_feature.gradle'
+
+dependencies {
+    api Deps.kotlin_stdlib
+    api Deps.coroutines
+    api Deps.app_compat_v7
+    api Deps.support_v4
+    api Deps.android_arch_extensions
+    api Deps.android_arch_runtime
+    api Deps.daggerRuntime
+    api Deps.daggerAndroid
+    api Deps.daggerAndroidSupport
+    api Deps.rx
+    api Deps.rxAndroid
+    api Deps.arrow_core
+    api Deps.arrow_sintax
+    api Deps.arrow_typeclasses
+    api Deps.arrow_data
+    api Deps.arrow_instances_core
+    api Deps.arrow_instances_data
+}

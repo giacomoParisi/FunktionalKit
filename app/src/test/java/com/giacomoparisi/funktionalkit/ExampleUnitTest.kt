@@ -1,4 +1,4 @@
-package com.giacomoparisi.androidarchkit
+package com.giacomoparisi.funktionalkit
 
 import org.junit.Test
 

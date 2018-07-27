@@ -1,4 +1,4 @@
-package com.giacomoparisi.androidarchkit
+package com.giacomoparisi.funktionalkit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

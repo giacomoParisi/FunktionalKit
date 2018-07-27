@@ -1,4 +1,4 @@
-package com.giacomoparisi.androidarchkit
+package com.giacomoparisi.funktionalkit
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
