@@ -1,5 +1,7 @@
 apply from: '../common_feature.gradle'
 
 dependencies {
+    implementation Deps.core_ktx
     implementation project(':core')
+    implementation project(':extensions')
 }

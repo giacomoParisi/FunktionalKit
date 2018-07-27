@@ -10,7 +10,7 @@ object Config {
 object Versions {
     //** KOTLIN **//
     const val kotlin = "1.2.51"
-    const val androidKtx = "1.0.0-beta01"
+    const val android_ktx = "1.0.0-beta01"
     //** SUPPORT **//
     const val support_lib = "1.0.0-beta01"
     //** COROUTINES **//
@@ -32,7 +32,7 @@ object Deps {
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
     const val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val core_ktx = "androidx.core:core-ktx:${Versions.androidKtx}"
+    const val core_ktx = "androidx.core:core-ktx:${Versions.android_ktx}"
 
     //** SUPPORT **//
     const val support_v4 = "androidx.legacy:legacy-support-v4:${Versions.support_lib}"

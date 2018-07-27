@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Lce</string>
+
+    <string name="ERROR_Network">A network error occurred</string>
 </resources>
