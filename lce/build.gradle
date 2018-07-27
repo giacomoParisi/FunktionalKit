@@ -1,6 +1,5 @@
 apply from: '../common_feature.gradle'
 
 dependencies {
-    api project(':core')
-    api project(':lce')
+    implementation project(':core')
 }

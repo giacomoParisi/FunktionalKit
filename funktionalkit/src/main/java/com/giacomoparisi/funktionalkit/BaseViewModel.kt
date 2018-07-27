@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktionalkit.core.arch
+package com.giacomoparisi.funktionalkit
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -8,8 +8,12 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
 import arrow.core.Option
 import com.giacomoparisi.funktionalkit.core.BuildConfig
-import com.giacomoparisi.funktionalkit.core.lce.Lce
-import com.giacomoparisi.funktionalkit.core.lce.isConnectionError
+import com.giacomoparisi.funktionalkit.core.arch.Coroutines
+import com.giacomoparisi.funktionalkit.core.arch.LiveDataDelegate
+import com.giacomoparisi.funktionalkit.core.arch.UiAction
+import com.giacomoparisi.funktionalkit.core.arch.UiActionsLiveData
+import com.giacomoparisi.funktionalkit.lce.Lce
+import com.giacomoparisi.funktionalkit.lce.isConnectionError
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 

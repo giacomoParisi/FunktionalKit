@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktionalkit.core.lce
+package com.giacomoparisi.funktionalkit.lce
 
 import arrow.core.None
 import arrow.core.Option

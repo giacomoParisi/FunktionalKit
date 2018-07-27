@@ -1,1 +1,1 @@
-include ':app', ':core', ':funktionalkit'
+include ':app', ':core', ':funktionalkit', ':lce'
