@@ -2,10 +2,7 @@ package com.giacomoparisi.funktionalkit
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import arrow.core.Option
 import com.giacomoparisi.funktionalkit.core.BuildConfig
 import com.giacomoparisi.funktionalkit.core.arch.Coroutines
@@ -20,7 +17,7 @@ import io.reactivex.disposables.Disposable
 open class BaseViewModel<T : Any>(
         val coroutines: Coroutines,
         initialState: T
-) : ViewModel() {
+) : ViewModel(), LifecycleObserver {
 
     //#region DISPOSABLE
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
