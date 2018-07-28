@@ -32,6 +32,8 @@ android {
         kapt Deps.daggerProcessor
         kapt Deps.daggerCompiler
         kapt Deps.arrow_annotations
+
+        testImplementation Deps.junit
     }
 
     packagingOptions {

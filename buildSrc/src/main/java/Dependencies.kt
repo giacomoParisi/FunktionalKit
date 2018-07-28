@@ -24,6 +24,8 @@ object Versions {
     const val rxAndroid = "2.0.2"
     //** ARROW **//
     const val arrow = "0.7.2"
+    //** TEST **//
+    const val junit = "4.12"
 }
 
 object Deps {
@@ -64,4 +66,7 @@ object Deps {
     const val arrow_instances_core = "io.arrow-kt:arrow-instances-core:${Versions.arrow}"
     const val arrow_instances_data = "io.arrow-kt:arrow-instances-data:${Versions.arrow}"
     const val arrow_annotations = "io.arrow-kt:arrow-annotations-processor:${Versions.arrow}"
+
+    //** TEST **//
+    const val junit = "junit:junit:${Versions.junit}"
 }
