@@ -28,6 +28,7 @@ android {
     }
 
     dependencies {
+
         kapt Deps.daggerProcessor
         kapt Deps.daggerCompiler
         kapt Deps.arrow_annotations

@@ -1,6 +1,9 @@
 apply from: '../common_feature.gradle'
 
 dependencies {
+
+    /* ==== MODULES ==== */
+
     api project(':core')
     api project(':lce')
     api project(':extensions')
