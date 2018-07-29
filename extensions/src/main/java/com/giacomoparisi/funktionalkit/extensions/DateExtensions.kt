@@ -24,15 +24,13 @@ fun String.formatDate(
         toFormat: String,
         fromLocale: Locale = Locale.getDefault(),
         toLocale: Locale = Locale.getDefault()
-): Option<String> {
+): Try<String> {
 
-    var formattedDate: Option<String> = arrow.core.none()
     val simpleDateFormatFrom = SimpleDateFormat(fromFormat, fromLocale)
-    Try { simpleDateFormatFrom.parse(this) }.map {
+    return Try { simpleDateFormatFrom.parse(this) }.map {
         val simpleDateFormatTo = SimpleDateFormat(toFormat, toLocale)
-        formattedDate = simpleDateFormatTo.format(it).toOption()
+        simpleDateFormatTo.format(it)
     }
-    return formattedDate
 }
 
 fun String.toCalendar(
