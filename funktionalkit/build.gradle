@@ -4,7 +4,7 @@ dependencies {
 
     /* ==== MODULES ==== */
 
-    api project(':core')
-    api project(':lce')
-    api project(':extensions')
+    implementation project(':core')
+    implementation project(':lce')
+    implementation project(':extensions')
 }
