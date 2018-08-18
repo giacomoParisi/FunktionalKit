@@ -9,7 +9,7 @@ object Config {
 
 object Versions {
     //** KOTLIN **//
-    const val kotlin = "1.2.51"
+    const val kotlin = "1.2.60"
     const val android_ktx = "1.0.0-beta01"
     //** SUPPORT **//
     const val support_lib = "1.0.0-beta01"
@@ -20,7 +20,7 @@ object Versions {
     //** DAGGER **//
     const val dagger = "2.16"
     //** RX **//
-    const val rx = "2.1.16"
+    const val rx = "2.1.17"
     const val rxAndroid = "2.0.2"
     //** ARROW **//
     const val arrow = "0.7.2"

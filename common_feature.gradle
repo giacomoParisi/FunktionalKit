@@ -29,8 +29,38 @@ android {
 
     dependencies {
 
+        /* ==== KOTLIN ==== */
+        api Deps.kotlin_stdlib
+
+        /* ==== COROUTINES ==== */
+        api Deps.coroutines
+
+        /* ==== ANDROID X ==== */
+        api Deps.app_compat_v7
+        api Deps.support_v4
+
+        /* ==== ARCH ==== */
+        api Deps.android_arch_extensions
+        api Deps.android_arch_runtime
+
+        /* ==== DAGGER ==== */
+        api Deps.daggerRuntime
+        api Deps.daggerAndroid
+        api Deps.daggerAndroidSupport
         kapt Deps.daggerProcessor
         kapt Deps.daggerCompiler
+
+        /* ==== RX ==== */
+        api Deps.rx
+        api Deps.rxAndroid
+
+        /* ==== ARROW ==== */
+        api Deps.arrow_core
+        api Deps.arrow_sintax
+        api Deps.arrow_typeclasses
+        api Deps.arrow_data
+        api Deps.arrow_instances_core
+        api Deps.arrow_instances_data
         kapt Deps.arrow_annotations
 
         testImplementation Deps.junit
