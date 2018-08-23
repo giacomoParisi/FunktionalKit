@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import arrow.core.Option
+import arrow.core.toOption
 import com.giacomoparisi.funktionalkit.core.BuildConfig
 import com.giacomoparisi.funktionalkit.core.arch.Coroutines
 import com.giacomoparisi.funktionalkit.core.arch.LiveDataDelegate
@@ -28,16 +29,16 @@ open class BaseViewModel<T : Any>(
         }
 
     protected fun dispose() {
-        compositeDisposable.dispose()
+        this.compositeDisposable.dispose()
     }
 
     fun Disposable.bindToLifecycle() {
-        compositeDisposable.add(this)
+        this@BaseViewModel.compositeDisposable.add(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun onDestroy() {
-        dispose()
+        this.dispose()
     }
     //endregion
 
@@ -47,13 +48,13 @@ open class BaseViewModel<T : Any>(
     val state by liveData
 
     suspend inline fun postState(crossinline f: (T) -> T) {
-        coroutines.invokeOnUi {
-            setState(f(state))
+        this.coroutines.invokeOnUi {
+            this.setState(f(this.state))
         }
     }
 
     fun setState(newState: T) {
-        liveData.setValue(newState)
+        this.liveData.setValue(newState)
     }
     //endregion
 
@@ -61,39 +62,39 @@ open class BaseViewModel<T : Any>(
     private val uiActions = UiActionsLiveData(coroutines)
 
     fun uiAction(action: UiAction) {
-        uiActions.executeFromUI(action)
+        this.uiActions.executeFromUI(action)
     }
 
     suspend fun postUiAction(action: UiAction) {
-        uiActions.invoke(action)
+        this.uiActions.invoke(action)
     }
     //endregion
 
     //#region OBSERVABLE
-    override fun onCleared() = coroutines.cancel()
+    override fun onCleared() = this.coroutines.cancel()
 
     fun observe(fragment: Fragment, observer: (T) -> Unit) {
-        liveData.observe(fragment, observer)
-        uiActions.observe(fragment) { it(fragment.requireActivity()) }
-        onOwnerConnected(fragment)
+        this.liveData.observe(fragment, observer)
+        this.uiActions.observe(fragment) { it(fragment.requireActivity()) }
+        this.onOwnerConnected(fragment)
     }
 
-    fun observe2(fragment: Fragment, observer: (T?, T) -> Unit) {
-        liveData.observe2(fragment, observer)
-        uiActions.observe(fragment) { it(fragment.requireActivity()) }
-        onOwnerConnected(fragment)
+    fun observe2(fragment: Fragment, observer: (Option<T>, T) -> Unit) {
+        this.liveData.observe2(fragment) { oldState: T?, newState: T -> observer.invoke(oldState.toOption(), newState) }
+        this.uiActions.observe(fragment) { it(fragment.requireActivity()) }
+        this.onOwnerConnected(fragment)
     }
 
     fun observe(activity: AppCompatActivity, observer: (T) -> Unit) {
-        liveData.observe(activity, observer)
-        uiActions.observe(activity) { it(activity) }
-        onOwnerConnected(activity)
+        this.liveData.observe(activity, observer)
+        this.uiActions.observe(activity) { it(activity) }
+        this.onOwnerConnected(activity)
     }
 
-    fun observe2(activity: AppCompatActivity, observer: (T?, T) -> Unit) {
-        liveData.observe2(activity, observer)
-        uiActions.observe(activity) { it(activity) }
-        onOwnerConnected(activity)
+    fun observe2(activity: AppCompatActivity, observer: (Option<T>, T) -> Unit) {
+        this.liveData.observe2(activity) { oldState: T?, newState: T -> observer.invoke(oldState.toOption(), newState) }
+        this.uiActions.observe(activity) { it(activity) }
+        this.onOwnerConnected(activity)
     }
 
     open fun onOwnerConnected(owner: LifecycleOwner) {
@@ -101,18 +102,18 @@ open class BaseViewModel<T : Any>(
     }
 
     fun observeForever(stateObserver: (T) -> Unit, actionObserve: (UiAction) -> Unit) {
-        liveData.observeForever(stateObserver)
-        uiActions.observeForever(actionObserve)
+        this.liveData.observeForever(stateObserver)
+        this.uiActions.observeForever(actionObserve)
     }
     //endregion
 
     suspend inline fun <R> execLce(crossinline copy: (Lce<R>) -> T, f: () -> Option<R>) {
-        postState {
+        this.postState {
             copy(Lce.Loading)
         }
         try {
             val success = Lce.Success(f())
-            postState {
+            this.postState {
                 copy(success)
             }
         } catch (e: Throwable) {
@@ -120,7 +121,7 @@ open class BaseViewModel<T : Any>(
                 if (BuildConfig.DEBUG) {
                     e.printStackTrace()
                 }
-                postState {
+                this.postState {
                     copy(Lce.Error(e))
                 }
             } else {
