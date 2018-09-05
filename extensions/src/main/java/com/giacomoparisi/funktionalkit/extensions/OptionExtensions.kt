@@ -19,5 +19,5 @@ suspend inline fun <T> Option<T>.run(someAction: (T) -> Unit) {
     }
 }
 
-fun <T> Option<T>.genericError(resourceProvider: ResourceProvider, @StringRes error: Int): Option<T> =
+fun <T> Option<T>.error(resourceProvider: ResourceProvider, @StringRes error: Int): Option<T> =
         this.fold({ throw ManagedException(resourceProvider, error) }) { this }
