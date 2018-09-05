@@ -11,7 +11,7 @@ import dagger.Provides
  * https://github.com/giacomoParisi
  */
 @Module()
-object AntsCoreModule {
+object FunktionalCoreModule {
 
     @JvmStatic
     @Provides

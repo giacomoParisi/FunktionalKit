@@ -10,6 +10,7 @@ import com.giacomoparisi.funktionalkit.core.arch.Coroutines
 import com.giacomoparisi.funktionalkit.core.arch.LiveDataDelegate
 import com.giacomoparisi.funktionalkit.core.arch.UiAction
 import com.giacomoparisi.funktionalkit.core.arch.UiActionsLiveData
+import com.giacomoparisi.funktionalkit.error.ManagedException
 import com.giacomoparisi.funktionalkit.lce.Lce
 import com.giacomoparisi.funktionalkit.lce.isConnectionError
 import io.reactivex.disposables.CompositeDisposable
@@ -117,7 +118,7 @@ open class BaseViewModel<T : Any>(
                 copy(success)
             }
         } catch (e: Throwable) {
-            if (e.isConnectionError() || BuildConfig.DEBUG) {
+            if (e.isConnectionError() || e is ManagedException || BuildConfig.DEBUG) {
                 if (BuildConfig.DEBUG) {
                     e.printStackTrace()
                 }
