@@ -3,9 +3,9 @@ package com.giacomoparisi.funktionalkit.core.dagger
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjection

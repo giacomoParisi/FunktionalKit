@@ -1,8 +1,8 @@
 package com.giacomoparisi.funktionalkit.core.arch
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.View
-import androidx.fragment.app.Fragment
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

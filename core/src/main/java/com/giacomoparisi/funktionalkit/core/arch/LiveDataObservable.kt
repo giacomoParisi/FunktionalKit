@@ -1,6 +1,6 @@
 package com.giacomoparisi.funktionalkit.core.arch
 
-import androidx.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LifecycleOwner
 
 /**
  * Created by Giacomo Parisi on 16/07/18.

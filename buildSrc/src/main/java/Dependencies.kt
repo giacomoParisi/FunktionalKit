@@ -9,14 +9,14 @@ object Config {
 
 object Versions {
     //** KOTLIN **//
-    const val kotlin = "1.2.60"
+    const val kotlin = "1.2.61"
     const val android_ktx = "1.0.0-beta01"
     //** SUPPORT **//
-    const val support_lib = "1.0.0-beta01"
+    const val support_lib = "28.0.0-alpha1"
     //** COROUTINES **//
     const val coroutines = "0.23.4"
     //** ANDROID ARCH **//
-    const val arch = "2.0.0-alpha1"
+    const val arch = "1.1.1"
     //** DAGGER **//
     const val dagger = "2.16"
     //** RX **//
@@ -37,15 +37,15 @@ object Deps {
     const val core_ktx = "androidx.core:core-ktx:${Versions.android_ktx}"
 
     //** SUPPORT **//
-    const val support_v4 = "androidx.legacy:legacy-support-v4:${Versions.support_lib}"
-    const val app_compat_v7 = "androidx.appcompat:appcompat:${Versions.support_lib}"
+    const val support_v4 = "com.android.support:support-v4:${Versions.support_lib}"
+    const val app_compat_v7 = "com.android.support:appcompat-v7:${Versions.support_lib}"
 
     //** COROUTINES **//
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
     //** ANDROID ARCH **//
-    const val android_arch_runtime = "androidx.lifecycle:lifecycle-runtime:${Versions.arch}"
-    const val android_arch_extensions = "androidx.lifecycle:lifecycle-extensions:${Versions.arch}"
+    const val android_arch_runtime = "android.arch.lifecycle:runtime:${Versions.arch}"
+    const val android_arch_extensions = "android.arch.lifecycle:extensions:${Versions.arch}"
 
     //** DAGGER **//
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"

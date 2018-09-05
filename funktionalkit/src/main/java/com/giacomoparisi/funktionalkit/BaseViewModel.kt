@@ -1,8 +1,8 @@
 package com.giacomoparisi.funktionalkit
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import android.arch.lifecycle.*
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import arrow.core.Option
 import arrow.core.toOption
 import com.giacomoparisi.funktionalkit.core.BuildConfig

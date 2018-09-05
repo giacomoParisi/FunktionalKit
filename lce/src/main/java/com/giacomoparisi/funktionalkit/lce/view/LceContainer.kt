@@ -1,15 +1,14 @@
 package com.giacomoparisi.funktionalkit.lce.view
 
 import android.content.Context
+import android.support.annotation.IdRes
+import android.support.annotation.LayoutRes
+import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.TextView
-import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.children
 import arrow.core.*
 import arrow.typeclasses.binding
 import com.giacomoparisi.funktionalkit.extensions.visibleOrGone
@@ -38,17 +37,25 @@ class LceContainer<T> private constructor(
             when (value) {
                 is Lce.Loading -> {
                     if (this.showLoading) {
-                        this.children.forEach { it.visibleOrGone = it == this._loading.orNull() || it != this._error.orNull() }
+                        for (i in 0 until this.childCount) {
+                            this.getChildAt(i).visibleOrGone = this.getChildAt(i) == this._loading.orNull() || this.getChildAt(i) != this._error.orNull()
+                        }
                         this._onLoading.map { it.invoke() }
                     } else
-                        this.children.forEach { it.visibleOrGone = it != this._loading.orNull() && it != this._error.orNull() }
+                        for (i in 0 until this.childCount) {
+                            this.getChildAt(i).visibleOrGone = this.getChildAt(i) != this._loading.orNull() && this.getChildAt(i) != this._error.orNull()
+                        }
                 }
                 is Lce.Success -> {
-                    this.children.forEach { it.visibleOrGone = it != this._loading.orNull() && it != this._error.orNull() }
+                    for (i in 0 until this.childCount) {
+                        this.getChildAt(i).visibleOrGone = this.getChildAt(i) != this._loading.orNull() && this.getChildAt(i) != this._error.orNull()
+                    }
                 }
                 is Lce.Error -> {
                     if (this.showError) {
-                        this.children.forEach { it.visibleOrGone = it == this._error.orNull() || it != this._loading.orNull() }
+                        for (i in 0 until this.childCount) {
+                            this.getChildAt(i).visibleOrGone = this.getChildAt(i) == this._error.orNull() || this.getChildAt(i) != this._loading.orNull()
+                        }
                         if (value.connectionError) {
                             val networkError = context.getString(_networkErrorMessageRes.getOrElse { R.string.ERROR_Network })
                             this._errorMessage.map { it.text = networkError }
@@ -60,7 +67,9 @@ class LceContainer<T> private constructor(
                     }
                 }
                 is Lce.Idle -> {
-                    children.forEach { it.visibleOrGone = it != this._loading.orNull() && it != this._error.orNull() }
+                    for (i in 0 until this.childCount) {
+                        this.getChildAt(i).visibleOrGone = this.getChildAt(i) != this._loading.orNull() && this.getChildAt(i) != this._error.orNull()
+                    }
                 }
             }
         }
