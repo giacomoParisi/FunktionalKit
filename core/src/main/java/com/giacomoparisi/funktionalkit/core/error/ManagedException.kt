@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktionalkit.error
+package com.giacomoparisi.funktionalkit.core.error
 
 import android.support.annotation.StringRes
 import com.giacomoparisi.funktionalkit.core.utils.ResourceProvider
