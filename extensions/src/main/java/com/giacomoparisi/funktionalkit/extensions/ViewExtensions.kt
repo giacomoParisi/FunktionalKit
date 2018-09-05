@@ -11,16 +11,15 @@ import android.view.View.VISIBLE
  * Created by Giacomo Parisi on 17/07/18.
  * https://github.com/giacomoParisi
  */
-object ViewUtils {
 
-    fun dpTiPx(context: Context, dp: Float): Float {
-        val res = context.resources
-        return TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dp,
-                res.displayMetrics
-        )
-    }
+
+fun Float.dpToPx(context: Context): Float {
+    val res = context.resources
+    return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            this,
+            res.displayMetrics
+    )
 }
 
 var View.visibleOrGone: Boolean
