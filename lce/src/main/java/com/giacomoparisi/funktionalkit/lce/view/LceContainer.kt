@@ -92,11 +92,11 @@ class LceContainer<T> private constructor(
 
         fun Builder<T>.error(
                 @LayoutRes layoutId: Int,
-                @IdRes errorMessageId: Int?,
-                @IdRes errorRetryId: Int?,
                 retryAction: () -> Unit,
-                networkErrorMessageRes: Int?,
-                onError: ((error: String, view: View, retry: Option<() -> Unit>) -> Unit)?
+                @IdRes errorMessageId: Int? = null,
+                @IdRes errorRetryId: Int? = null,
+                networkErrorMessageRes: Int? = null,
+                onError: ((error: String, view: View, retry: Option<() -> Unit>) -> Unit)? = null
         ): Builder<T> {
             this._errorLayoutId = layoutId.toOption()
             this._errorMessageId = errorMessageId.toOption()
@@ -107,16 +107,17 @@ class LceContainer<T> private constructor(
             return this@Builder
         }
 
-        fun Builder<T>.error(
-                networkErrorMessageRes: Int?,
-                onError: ((error: String, view: View, retry: Option<() -> Unit>) -> Unit)
+        fun error(onError: ((error: String, view: View, retry: Option<() -> Unit>) -> Unit),
+                  retryAction: () -> Unit,
+                  networkErrorMessageRes: Int? = null
         ): Builder<T> {
             this._networkErrorMessageRes = networkErrorMessageRes.toOption()
             this._onError = onError.toOption()
+            this._retryAction = retryAction.toOption()
             return this@Builder
         }
 
-        fun Builder<T>.loading(@LayoutRes layoutId: Int, onLoading: (() -> Unit)?): Builder<T> {
+        fun loading(@LayoutRes layoutId: Int, onLoading: (() -> Unit)? = null): Builder<T> {
             this._loadingLayoutId = layoutId.toOption()
             this._onLoading = onLoading.toOption()
             return this@Builder
