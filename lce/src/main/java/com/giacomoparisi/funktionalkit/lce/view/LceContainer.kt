@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.design.widget.CoordinatorLayout
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,13 @@ class LceContainer<T> private constructor(
     private var _error: Option<View> = none()
     private var _errorMessage: Option<TextView> = none()
     private var _retry: Option<View> = none()
+
+    private val _params = CoordinatorLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+
+    init {
+        this._params.gravity = Gravity.CENTER
+        this.layoutParams = this._params
+    }
 
     var lce: Lce<T>? = null
         set(value) {
@@ -159,7 +167,7 @@ class LceContainer<T> private constructor(
 
     fun attachToRoot(view: View) {
         if (!isInEditMode) {
-            val params = android.view.ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
+            val params = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             this.addView(view, params)
             val inflater = LayoutInflater.from(context)
             _loading = _loadingLayoutId.map { layoutId -> inflater.inflate(layoutId, this, false).also { addView(it, params) } }
