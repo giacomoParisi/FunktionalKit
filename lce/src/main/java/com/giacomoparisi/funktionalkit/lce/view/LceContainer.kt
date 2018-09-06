@@ -162,11 +162,11 @@ class LceContainer<T> private constructor(
             val params = android.view.ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
             this.addView(view, params)
             val inflater = LayoutInflater.from(context)
-            _loading = _loadingLayoutId.map { inflater.inflate(it, this, false).also { addView(it, params) } }
-            _error = _errorLayoutId.map { inflater.inflate(it, this, false).also { addView(it, params) } }
+            _loading = _loadingLayoutId.map { layoutId -> inflater.inflate(layoutId, this, false).also { addView(it, params) } }
+            _error = _errorLayoutId.map { layoutId -> inflater.inflate(layoutId, this, false).also { addView(it, params) } }
             _errorMessage = Option.monad().binding { _error.bind().findViewById<TextView>(_errorMessageId.bind()) }.fix()
             _retry = Option.monad().binding { _error.bind().findViewById<View>(_errorRetryId.bind()) }.fix()
-            _retry.map { it.setOnClickListener { _retryAction.map { it() } } }
+            _retry.map { retryButton -> retryButton.setOnClickListener { _ -> _retryAction.map { it() } } }
         }
     }
 }
