@@ -3,6 +3,7 @@ package com.giacomoparisi.funktionalkit.lce
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.toOption
+import retrofit2.HttpException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -41,4 +42,5 @@ fun Throwable.isConnectionError(): Boolean =
         this is UnknownHostException ||
                 this is SocketException ||
                 this is SocketTimeoutException ||
-                this is TimeoutException
+                this is TimeoutException ||
+                this is HttpException
