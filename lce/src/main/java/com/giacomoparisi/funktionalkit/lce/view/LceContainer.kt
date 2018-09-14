@@ -24,7 +24,7 @@ class LceContainer<T> private constructor(
         private var _errorRetryId: Option<Int> = none(),
         private var _retryAction: Option<() -> Unit> = none(),
         private var _networkErrorMessageRes: Option<Int> = none(),
-        private var _onError: Option<(error: String, view: View, retry: Option<() -> Unit>) -> Unit> = none(),
+        private var _onError: Option<(throwable: Throwable, errorMessage: String, view: View, retry: Option<() -> Unit>) -> Unit> = none(),
         private var _onLoading: Option<() -> Unit> = none()
 ) : CoordinatorLayout(context) {
 
@@ -67,10 +67,10 @@ class LceContainer<T> private constructor(
                         if (value.connectionError) {
                             val networkError = context.getString(_networkErrorMessageRes.getOrElse { R.string.ERROR_Network })
                             this._errorMessage.map { it.text = networkError }
-                            this._onError.map { it.invoke(networkError, this, this._retryAction) }
+                            this._onError.map { it.invoke(value.throwable, networkError, this, this._retryAction) }
                         } else {
                             this._errorMessage.map { it.text = value.message }
-                            this._onError.map { it.invoke(value.message, this, this._retryAction) }
+                            this._onError.map { it.invoke(value.throwable, value.message, this, this._retryAction) }
                         }
                     }
                 }
@@ -95,7 +95,7 @@ class LceContainer<T> private constructor(
         private var _errorRetryId: Option<Int> = none()
         private var _retryAction: Option<() -> Unit> = none()
         private var _networkErrorMessageRes: Option<Int> = none()
-        private var _onError: Option<(error: String, view: View, retry: Option<() -> Unit>) -> Unit> = none()
+        private var _onError: Option<(throwable: Throwable, errorMessage: String, view: View, retry: Option<() -> Unit>) -> Unit> = none()
         private var _onLoading: Option<() -> Unit> = none()
 
         fun Builder<T>.error(
@@ -104,7 +104,7 @@ class LceContainer<T> private constructor(
                 @IdRes errorMessageId: Int? = null,
                 @IdRes errorRetryId: Int? = null,
                 networkErrorMessageRes: Int? = null,
-                onError: ((error: String, view: View, retry: Option<() -> Unit>) -> Unit)? = null
+                onError: ((throwable: Throwable, error: String, view: View, retry: Option<() -> Unit>) -> Unit)? = null
         ): Builder<T> {
             this._errorLayoutId = layoutId.toOption()
             this._errorMessageId = errorMessageId.toOption()
@@ -115,7 +115,7 @@ class LceContainer<T> private constructor(
             return this@Builder
         }
 
-        fun error(onError: ((error: String, view: View, retry: Option<() -> Unit>) -> Unit),
+        fun error(onError: ((throwable: Throwable, error: String, view: View, retry: Option<() -> Unit>) -> Unit),
                   retryAction: () -> Unit,
                   networkErrorMessageRes: Int? = null
         ): Builder<T> {

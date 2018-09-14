@@ -23,8 +23,8 @@ sealed class Lce<out T> {
         override fun <R> map(f: (Option<T>) -> R): Lce<R> = Success(f(data).toOption())
     }
 
-    data class Error(val message: String, val connectionError: Boolean = false) : Lce<Nothing>() {
-        constructor(t: Throwable) : this(t.message ?: "", t.isConnectionError())
+    data class Error(val throwable: Throwable, val message: String, val connectionError: Boolean = false) : Lce<Nothing>() {
+        constructor(t: Throwable) : this(t,t.message ?: "", t.isConnectionError())
 
         override fun <R> map(f: (Option<Nothing>) -> R): Lce<R> = this
     }
