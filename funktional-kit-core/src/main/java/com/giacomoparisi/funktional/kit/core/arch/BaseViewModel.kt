@@ -2,7 +2,9 @@ package com.giacomoparisi.funktional.kit.core.arch
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import arrow.core.Option
 import arrow.core.toOption
 import com.giacomoparisi.funktional.kit.core.BuildConfig
@@ -33,10 +35,11 @@ open class BaseViewModel<T : Any>(
         this@BaseViewModel.compositeDisposable.add(this)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    private fun onDestroy() {
+    override fun onCleared() {
         this.dispose()
+        super.onCleared()
     }
+
     //endregion
 
     //#region STATE
