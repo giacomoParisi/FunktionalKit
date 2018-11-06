@@ -4,66 +4,65 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.giacomoparisi.funktionalkit'
+group = 'com.giacomoparisi.funktional.kit'
 
 androidExtensions {
     experimental = true
 }
 
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
-
 android {
-    compileSdkVersion Config.compile_sdk
+    compileSdkVersion AndroidConfig.compile_sdk
 
     defaultConfig {
-        minSdkVersion Config.min_sdk
-        targetSdkVersion Config.target_sdk
-        versionCode Config.version_code
-        versionName Config.version_name
+        minSdkVersion AndroidConfig.min_sdk
+        targetSdkVersion AndroidConfig.target_sdk
+        versionCode AndroidConfig.version_code
+        versionName AndroidConfig.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     dependencies {
 
         /* ==== KOTLIN ==== */
-        api Deps.kotlin_stdlib
+        implementation Libs.kotlin_stdlib_jdk7
 
         /* ==== COROUTINES ==== */
-        api Deps.coroutines
+        implementation Libs.kotlinx_coroutines_android
 
-        /* ==== ANDROID X ==== */
-        api Deps.app_compat_v7
-        api Deps.support_v4
+        /* ==== ANDROID ==== */
+        implementation Libs.appcompat
+        implementation Libs.legacy_support_v4
 
         /* ==== ARCH ==== */
-        api Deps.android_arch_extensions
-        api Deps.android_arch_runtime
+        implementation Libs.lifecycle_extensions
+        implementation Libs.lifecycle_runtime
 
         /* ==== DAGGER ==== */
-        api Deps.daggerRuntime
-        api Deps.daggerAndroid
-        api Deps.daggerAndroidSupport
-        kapt Deps.daggerProcessor
-        kapt Deps.daggerCompiler
+        implementation Libs.dagger
+        implementation Libs.dagger_android
+        implementation Libs.dagger_android_support
+        kapt Libs.dagger_android_processor
+        kapt Libs.dagger_compiler
 
         /* ==== RX ==== */
-        api Deps.rx
-        api Deps.rxAndroid
+        implementation Libs.rxjava
+        implementation Libs.rxandroid
+
+        /* ==== EXTENSIONS ==== */
+        implementation Libs.kotlin_functional_extensions_core
+        implementation Libs.kotlinx_coroutines_android
+        implementation Libs.kotlin_functional_extensions_arrow
 
         /* ==== ARROW ==== */
-        api Deps.arrow_core
-        api Deps.arrow_sintax
-        api Deps.arrow_typeclasses
-        api Deps.arrow_data
-        api Deps.arrow_instances_core
-        api Deps.arrow_instances_data
-        kapt Deps.arrow_annotations
+        implementation Libs.arrow_core
+        implementation Libs.arrow_syntax
+        implementation Libs.arrow_typeclasses
+        implementation Libs.arrow_data
+        implementation Libs.arrow_instances_core
+        implementation Libs.arrow_instances_data
+        kapt Libs.arrow_annotations_processor
 
-        testImplementation Deps.junit
+        testImplementation Libs.junit
     }
 
     packagingOptions {

@@ -1,9 +1,0 @@
-apply from: '../common_feature.gradle'
-
-dependencies {
-
-    /* ==== MODULES ==== */
-
-    implementation project(':core')
-    implementation project(':lce')
-}

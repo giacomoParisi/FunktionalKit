@@ -1,6 +1,0 @@
-apply from: '../common_feature.gradle'
-
-dependencies {
-    implementation project(':core')
-    implementation Deps.retrofit
-}
