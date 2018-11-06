@@ -6,5 +6,4 @@ dependencies {
 
     implementation project(':core')
     implementation project(':lce')
-    implementation project(':extensions')
 }

@@ -9,7 +9,7 @@ object Config {
 
 object Versions {
     //** KOTLIN **//
-    const val kotlin = "1.2.61"
+    const val kotlin = "1.3.0"
     const val android_ktx = "1.0.0-beta01"
     //** SUPPORT **//
     const val support_lib = "28.0.0-alpha1"
