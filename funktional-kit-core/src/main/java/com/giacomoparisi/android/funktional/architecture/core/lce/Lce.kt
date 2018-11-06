@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.lce
+package com.giacomoparisi.android.funktional.architecture.core.lce
 
 import arrow.core.None
 import arrow.core.Option

@@ -1,7 +1,7 @@
-package com.giacomoparisi.funktional.kit.core.error
+package com.giacomoparisi.android.funktional.architecture.core.error
 
 import androidx.annotation.StringRes
-import com.giacomoparisi.funktional.kit.core.utils.ResourceProvider
+import com.giacomoparisi.android.funktional.architecture.core.utils.ResourceProvider
 
 open class ManagedException : RuntimeException {
 

@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.utils
+package com.giacomoparisi.android.funktional.architecture.core.utils
 
 import android.app.Application
 import androidx.annotation.StringRes

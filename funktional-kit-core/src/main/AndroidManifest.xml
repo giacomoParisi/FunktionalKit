@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.giacomoparisi.funktional.kit.core" />
+    package="com.giacomoparisi.android.funktional.architecture.core" />

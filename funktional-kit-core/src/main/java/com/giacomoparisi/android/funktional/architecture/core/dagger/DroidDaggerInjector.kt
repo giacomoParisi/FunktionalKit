@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.dagger
+package com.giacomoparisi.android.funktional.architecture.core.dagger
 
 import android.app.Activity
 import android.app.Application

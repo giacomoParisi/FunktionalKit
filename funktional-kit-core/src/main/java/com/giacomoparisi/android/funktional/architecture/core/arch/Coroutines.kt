@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.arch
+package com.giacomoparisi.android.funktional.architecture.core.arch
 
 import android.os.AsyncTask
 import kotlinx.coroutines.*

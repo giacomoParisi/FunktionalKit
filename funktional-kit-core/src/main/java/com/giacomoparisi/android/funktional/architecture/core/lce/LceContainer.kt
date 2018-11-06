@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.lce
+package com.giacomoparisi.android.funktional.architecture.core.lce
 
 import android.content.Context
 import android.view.Gravity

@@ -1,8 +1,8 @@
-package com.giacomoparisi.funktional.kit.core.dagger
+package com.giacomoparisi.android.funktional.architecture.core.dagger
 
-import com.giacomoparisi.funktional.kit.core.arch.AndroidCoroutines
-import com.giacomoparisi.funktional.kit.core.arch.Coroutines
-import com.giacomoparisi.funktional.kit.core.arch.ViewModelFactory
+import com.giacomoparisi.android.funktional.architecture.core.arch.AndroidCoroutines
+import com.giacomoparisi.android.funktional.architecture.core.arch.Coroutines
+import com.giacomoparisi.android.funktional.architecture.core.arch.ViewModelFactory
 import dagger.Module
 import dagger.Provides
 

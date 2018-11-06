@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core;
+package com.giacomoparisi.android.funktional.architecture.core;
 
 import org.junit.Test;
 

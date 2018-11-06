@@ -1,1 +1,1 @@
-include ':app', ':funktional-kit-core'
+include ':funktional-kit-core'

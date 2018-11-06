@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.arch
+package com.giacomoparisi.android.funktional.architecture.core.arch
 
 import androidx.annotation.MainThread
 import androidx.fragment.app.FragmentActivity

@@ -1,4 +1,4 @@
-package com.giacomoparisi.funktional.kit.core.arch
+package com.giacomoparisi.android.funktional.architecture.core.arch
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -7,10 +7,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import arrow.core.Option
 import arrow.core.toOption
-import com.giacomoparisi.funktional.kit.core.BuildConfig
-import com.giacomoparisi.funktional.kit.core.error.ManagedException
-import com.giacomoparisi.funktional.kit.core.lce.Lce
-import com.giacomoparisi.funktional.kit.core.lce.isConnectionError
+import com.giacomoparisi.android.funktional.architecture.core.BuildConfig
+import com.giacomoparisi.android.funktional.architecture.core.error.ManagedException
+import com.giacomoparisi.android.funktional.architecture.core.lce.Lce
+import com.giacomoparisi.android.funktional.architecture.core.lce.isConnectionError
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
