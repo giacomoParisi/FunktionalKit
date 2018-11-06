@@ -13,8 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import arrow.core.*
 import arrow.instances.option.monad.monad
 import arrow.typeclasses.binding
-import com.giacomoparisi.funktionalkit.lce.Lce
-import com.giacomoparisi.funktionalkit.lce.R
+import com.giacomoparisi.android.funktional.architecture.core.R
 import com.giacomoparisi.kotlin.functional.extensions.android.view.visibleOrGone
 
 class LceContainer<T> private constructor(

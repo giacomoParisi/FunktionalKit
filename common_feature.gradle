@@ -50,7 +50,7 @@ android {
 
         /* ==== EXTENSIONS ==== */
         implementation Libs.kotlin_functional_extensions_core
-        implementation Libs.kotlinx_coroutines_android
+        implementation Libs.kotlin_functional_extensions_android
         implementation Libs.kotlin_functional_extensions_arrow
 
         /* ==== ARROW ==== */
@@ -62,6 +62,10 @@ android {
         implementation Libs.arrow_instances_data
         kapt Libs.arrow_annotations_processor
 
+        /* ==== RETROFIT ==== */
+        implementation Libs.retrofit
+
+        /* ==== TEST ==== */
         testImplementation Libs.junit
     }
 
