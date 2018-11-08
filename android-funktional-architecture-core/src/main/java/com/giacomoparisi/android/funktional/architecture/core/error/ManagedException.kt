@@ -3,7 +3,7 @@ package com.giacomoparisi.android.funktional.architecture.core.error
 import androidx.annotation.StringRes
 import com.giacomoparisi.android.funktional.architecture.core.utils.ResourceProvider
 
-open class ManagedException : RuntimeException {
+open class ManagedException : Throwable {
 
     constructor() : super()
     constructor(message: String?) : super(message)
