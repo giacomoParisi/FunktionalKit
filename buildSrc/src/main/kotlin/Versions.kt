@@ -30,7 +30,7 @@ object Versions {
     const val android_maven_gradle_plugin: String = "2.1" 
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
-            "a23263baf2" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "ef9c966d23" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val com_google_dagger: String = "2.19" 
 
