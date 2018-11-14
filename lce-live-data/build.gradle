@@ -1,0 +1,5 @@
+apply from: '../library-android.gradle'
+
+dependencies {
+    implementation project(':lce-core')
+}

@@ -1,0 +1,20 @@
+dependencies {
+
+    /* ==== KOTLIN ==== */
+    implementation Libs.kotlin_stdlib_jdk7
+
+    /* ==== ARROW ==== */
+    implementation Libs.arrow_core
+    implementation Libs.arrow_syntax
+    implementation Libs.arrow_typeclasses
+    implementation Libs.arrow_data
+    implementation Libs.arrow_instances_core
+    implementation Libs.arrow_instances_data
+    kapt Libs.arrow_annotations_processor
+
+    /* ==== EXTENSIONS ==== */
+    implementation Libs.kotlin_functional_extensions_core
+    implementation Libs.kotlin_functional_extensions_android
+    implementation Libs.kotlin_functional_extensions_arrow
+    implementation Libs.kotlin_functional_extensions_coroutines
+}

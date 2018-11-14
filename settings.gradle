@@ -1,1 +1,1 @@
-include ':android-funktional-architecture-core'
+include ':lce-android', ':lce-sample', ':lce-live-data', ':lce-core'
