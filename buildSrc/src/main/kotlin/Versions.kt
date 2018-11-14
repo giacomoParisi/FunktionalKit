@@ -5,13 +5,11 @@
  *
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
-    const val appcompat: String = "1.0.2"
+    const val appcompat: String = "1.0.2" 
 
-    const val androidx_core_core: String = "1.0.1" 
+    const val androidx_core_core: String = "1.0.1"
 
-    const val legacy_support_v4: String = "1.0.0" 
-
-    const val androidx_lifecycle: String = "2.0.0" 
+    const val lifecycle_livedata: String = "2.0.0" 
 
     const val jetifier_processor: String = "1.0.0-beta02" // exceed the version found: 0.0.1
 
@@ -24,26 +22,16 @@ object Versions {
     const val android_maven_gradle_plugin: String = "2.1" 
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
-            "ac8d7e6178" // No update information. Is this dependency available on jcenter or mavenCentral?
-
-    const val com_google_dagger: String = "2.19" 
-
-    const val retrofit: String = "2.4.0" 
+            "5be4415e69" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val io_arrow_kt: String =
             "0.8.0" // No update information. Is this dependency available on jcenter or mavenCentral?
 
-    const val rxandroid: String = "2.1.0" 
-
-    const val rxjava: String = "2.2.3" 
-
-    const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6" 
-
-    const val junit: String = "4.12"
+    const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6"
 
     const val org_jetbrains_kotlin: String = "1.3.10"
 
-    const val kotlinx_coroutines_android: String = "1.0.1" 
+    const val org_jetbrains_kotlinx: String = "1.0.1" 
 
     /**
      *

@@ -14,19 +14,9 @@ object Libs {
     const val androidx_core_core: String = "androidx.core:core:" + Versions.androidx_core_core
 
     /**
-     * [legacy-support-v4 website](http://developer.android.com/tools/extras/support-library.html) */
-    const val legacy_support_v4: String =
-            "androidx.legacy:legacy-support-v4:" + Versions.legacy_support_v4
-
-    /**
-     * [lifecycle-extensions website](https://developer.android.com/topic/libraries/architecture/index.html) */
-    const val lifecycle_extensions: String =
-            "androidx.lifecycle:lifecycle-extensions:" + Versions.androidx_lifecycle
-
-    /**
-     * [lifecycle-runtime website](https://developer.android.com/topic/libraries/architecture/index.html) */
-    const val lifecycle_runtime: String =
-            "androidx.lifecycle:lifecycle-runtime:" + Versions.androidx_lifecycle
+     * [lifecycle-livedata website](https://developer.android.com/topic/libraries/architecture/index.html) */
+    const val lifecycle_livedata: String =
+            "androidx.lifecycle:lifecycle-livedata:" + Versions.lifecycle_livedata
 
     /**
      * [jetifier-processor website](http://developer.android.com/tools/extras/support-library.html) */
@@ -63,34 +53,6 @@ object Libs {
     const val kotlin_functional_extensions_coroutines: String =
             "com.github.giacomoParisi.kotlin-functional-extensions:kotlin-functional-extensions-coroutines:" + Versions.com_github_giacomoparisi_kotlin_functional_extensions
 
-    /**
-     * [dagger-android-processor website](https://github.com/google/dagger) */
-    const val dagger_android_processor: String =
-            "com.google.dagger:dagger-android-processor:" + Versions.com_google_dagger
-
-    /**
-     * [dagger-android-support website](https://github.com/google/dagger) */
-    const val dagger_android_support: String =
-            "com.google.dagger:dagger-android-support:" + Versions.com_google_dagger
-
-    /**
-     * [dagger-android website](https://github.com/google/dagger) */
-    const val dagger_android: String =
-            "com.google.dagger:dagger-android:" + Versions.com_google_dagger
-
-    /**
-     * [dagger-compiler website](https://github.com/google/dagger) */
-    const val dagger_compiler: String =
-            "com.google.dagger:dagger-compiler:" + Versions.com_google_dagger
-
-    /**
-     * [dagger website](https://github.com/google/dagger) */
-    const val dagger: String = "com.google.dagger:dagger:" + Versions.com_google_dagger
-
-    /**
-     * [retrofit website](https://github.com/square/retrofit/) */
-    const val retrofit: String = "com.squareup.retrofit2:retrofit:" + Versions.retrofit
-
     const val arrow_annotations_processor: String =
             "io.arrow-kt:arrow-annotations-processor:" + Versions.io_arrow_kt
 
@@ -110,25 +72,8 @@ object Libs {
      * [arrow-typeclasses website](https://github.com/arrow-kt/arrow/) */
     const val arrow_typeclasses: String = "io.arrow-kt:arrow-typeclasses:" + Versions.io_arrow_kt
 
-    /**
-     * [rxandroid website](https://github.com/ReactiveX/RxAndroid) */
-    const val rxandroid: String = "io.reactivex.rxjava2:rxandroid:" + Versions.rxandroid
-
-    /**
-     * [rxjava website](https://github.com/ReactiveX/RxJava) */
-    const val rxjava: String = "io.reactivex.rxjava2:rxjava:" + Versions.rxjava
-
     const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String =
             "jmfayard.github.io.gradle-kotlin-dsl-libs:jmfayard.github.io.gradle-kotlin-dsl-libs.gradle.plugin:" + Versions.jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin
-
-    /**
-     * [junit website](http://junit.org) */
-    const val junit: String = "junit:junit:" + Versions.junit
-
-    /**
-     * [kotlin-android-extensions-runtime website](https://kotlinlang.org/) */
-    const val kotlin_android_extensions_runtime: String =
-            "org.jetbrains.kotlin:kotlin-android-extensions-runtime:" + Versions.org_jetbrains_kotlin
 
     /**
      * [kotlin-android-extensions website](https://kotlinlang.org/) */
@@ -158,5 +103,10 @@ object Libs {
     /**
      * [kotlinx-coroutines-android website](https://github.com/Kotlin/kotlinx.coroutines) */
     const val kotlinx_coroutines_android: String =
-            "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.kotlinx_coroutines_android
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:" + Versions.org_jetbrains_kotlinx
+
+    /**
+     * [kotlinx-coroutines-core website](https://github.com/Kotlin/kotlinx.coroutines) */
+    const val kotlinx_coroutines_core: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:" + Versions.org_jetbrains_kotlinx
 }

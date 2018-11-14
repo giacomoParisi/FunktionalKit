@@ -47,14 +47,17 @@ class LceWrapper<V : ViewGroup>(private val _root: V, private val _settings: Lce
                     .pipe { inflater.inflate(it, this@LceWrapper._root, false) }
                     .also { this@LceWrapper._root.addView(it, params) }
         }.fix()
+
+        this.apply(Lce.Idle)
     }
 
-    fun addToRoot(view: View) {
-        val params = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT)
-        this._root.addView(view, 0, params)
-    }
+    fun addToRoot(view: View): View =
+            ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT)
+                    .pipe { this._root.addView(view, 0, it) }
+                    .pipe { this._root }
+
 
     private fun isEqualAtRootIndex(view: Option<View>, index: Int): Boolean =
             this._root.getChildAt(index) == view.orNull()

@@ -2,4 +2,7 @@ apply from: '../library-android.gradle'
 
 dependencies {
     implementation project(':lce-core')
+
+    /* ==== LIVE DATA ==== */
+    implementation Libs.lifecycle_livedata
 }
