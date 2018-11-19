@@ -1,7 +1,7 @@
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.giacomoParisi.lce'
+apply plugin: 'com.jfrog.bintray'
 apply from: '../library.gradle'
 apply plugin: 'java-library'
 

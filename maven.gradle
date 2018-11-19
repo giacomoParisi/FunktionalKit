@@ -1,0 +1,50 @@
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'lce'
+
+    publishedGroupId = 'com.giacomoparisi.lce'
+    libraryName = 'lce'
+
+    libraryDescription = ''
+
+    siteUrl = 'https://github.com/giacomoParisi/lce'
+    gitUrl = 'https://github.com/giacomoParisi/lce.git'
+
+    libraryVersion = '0.0.1-alpha01'
+
+    developerId = 'giacomoP'
+    developerName = 'Giacomo Parisi'
+    developerEmail = 'giacomoparisi95@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+group = publishedGroupId
+version = libraryVersion
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        dryRun = false
+        publish = true
+        override = false
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+        }
+    }
+}
