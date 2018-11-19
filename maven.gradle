@@ -10,7 +10,7 @@ ext {
     siteUrl = 'https://github.com/giacomoParisi/lce'
     gitUrl = 'https://github.com/giacomoParisi/lce.git'
 
-    libraryVersion = '0.0.1-alpha01'
+    libraryVersion = '0.0.1-alpha02'
 
     developerId = 'giacomoP'
     developerName = 'Giacomo Parisi'

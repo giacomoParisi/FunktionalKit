@@ -1,3 +1,5 @@
+import kotlin.String
+
 /**
  * Find which updates are available by running
  *     `$ ./gradlew syncLibs`
@@ -7,7 +9,7 @@
 object Versions {
     const val appcompat: String = "1.0.2" 
 
-    const val androidx_core_core: String = "1.0.1"
+    const val androidx_core_core: String = "1.0.1" 
 
     const val lifecycle_livedata: String = "2.0.0" 
 
@@ -19,17 +21,19 @@ object Versions {
 
     const val lint_gradle: String = "26.2.1" 
 
-    const val android_maven_gradle_plugin: String = "2.1" 
+    const val android_maven_gradle_plugin: String = "2.1" // exceed the version found: 1.3
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
-            "5be4415e69" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "ac4c27f595" // No update information. Is this dependency available on jcenter or mavenCentral?
+
+    const val gradle_bintray_plugin: String = "1.8.4" 
 
     const val io_arrow_kt: String =
             "0.8.0" // No update information. Is this dependency available on jcenter or mavenCentral?
 
-    const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6"
+    const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6" 
 
-    const val org_jetbrains_kotlin: String = "1.3.10"
+    const val org_jetbrains_kotlin: String = "1.3.10" 
 
     const val org_jetbrains_kotlinx: String = "1.0.1" 
 
@@ -43,8 +47,8 @@ object Versions {
 
         const val currentVersion: String = "4.10.2"
 
-        const val nightlyVersion: String = "5.1-20181114000030+0000"
+        const val nightlyVersion: String = "5.1-20181119000035+0000"
 
-        const val releaseCandidate: String = "5.0-rc-2"
+        const val releaseCandidate: String = "5.0-rc-3"
     }
 }
