@@ -21,7 +21,7 @@ object Versions {
 
     const val lint_gradle: String = "26.2.1" 
 
-    const val android_maven_gradle_plugin: String = "2.1" // exceed the version found: 1.3
+    const val android_maven_gradle_plugin: String = "2.1" 
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
             "ac4c27f595" // No update information. Is this dependency available on jcenter or mavenCentral?
@@ -32,6 +32,8 @@ object Versions {
             "0.8.0" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6" 
+
+    const val org_jetbrains_dokka: String = "0.9.17" 
 
     const val org_jetbrains_kotlin: String = "1.3.10" 
 
@@ -47,8 +49,8 @@ object Versions {
 
         const val currentVersion: String = "4.10.2"
 
-        const val nightlyVersion: String = "5.1-20181119000035+0000"
+        const val nightlyVersion: String = "5.1-20181120000042+0000"
 
-        const val releaseCandidate: String = "5.0-rc-3"
+        const val releaseCandidate: String = "5.0-rc-4"
     }
 }

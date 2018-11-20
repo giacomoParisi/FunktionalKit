@@ -1,13 +1,3 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath Libs.android_maven_gradle_plugin
-        classpath Libs.gradle_bintray_plugin
-    }
-}
-
 apply from: '../library-android.gradle'
 
 dependencies {
@@ -17,37 +7,4 @@ dependencies {
     implementation Libs.lifecycle_livedata
 }
 
-apply from: '../maven.gradle'
-
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'aar'
-            groupId publishedGroupId
-            artifactId 'lce-live-data'
-
-            name libraryName
-            description libraryDescription
-            url siteUrl
-
-            licenses {
-                license {
-                    name licenseName
-                    url licenseUrl
-                }
-            }
-            developers {
-                developer {
-                    id developerId
-                    name developerName
-                    email developerEmail
-                }
-            }
-            scm {
-                connection gitUrl
-                developerConnection gitUrl
-                url siteUrl
-            }
-        }
-    }
-}
+apply from: rootProject.file('release-bintray.gradle')

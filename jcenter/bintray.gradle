@@ -1,29 +1,5 @@
 apply plugin: 'com.jfrog.bintray'
 
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'lce'
-
-    publishedGroupId = 'com.giacomoparisi.lce'
-    libraryName = 'lce'
-
-    libraryDescription = ''
-
-    siteUrl = 'https://github.com/giacomoParisi/lce'
-    gitUrl = 'https://github.com/giacomoParisi/lce.git'
-
-    libraryVersion = '0.0.1-alpha02'
-
-    developerId = 'giacomoP'
-    developerName = 'Giacomo Parisi'
-    developerEmail = 'giacomoparisi95@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-group = publishedGroupId
 version = libraryVersion
 
 if (project.hasProperty("android")) { // Android libraries
@@ -36,7 +12,7 @@ if (project.hasProperty("android")) { // Android libraries
         source = android.sourceSets.main.java.srcDirs
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     }
-
+    
     apply plugin: "org.jetbrains.dokka-android"
     task dokkaJavadoc(type: dokka.getClass()) {
         outputFormat = 'javadoc'
@@ -52,7 +28,7 @@ if (project.hasProperty("android")) { // Android libraries
         classifier = 'sources'
         from sourceSets.main.allSource
     }
-
+    
     apply plugin: "org.jetbrains.dokka"
     task dokkaJavadoc(type: dokka.getClass()) {
         outputFormat = 'javadoc'
@@ -78,27 +54,27 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+  user = properties.getProperty("bintray.user")
+  key = properties.getProperty("bintray.apikey")
 
-    configurations = ['archives']
-    pkg {
-        repo = bintrayRepo
-        name = bintrayName
-        desc = libraryDescription
+  configurations = ['archives']
+  pkg {
+    repo = bintrayRepo
+    name = bintrayName
+    desc = libraryDescription
 
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publish = true
-        publicDownloadNumbers = true
-        version {
-            desc = libraryDescription
-            gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase = properties.getProperty("bintray.gpg.password")
-                //Optional. The passphrase for GPG signing'
-            }
-        }
+    websiteUrl = siteUrl
+    vcsUrl = gitUrl
+    licenses = allLicenses
+    publish = true
+    publicDownloadNumbers = true
+    version {
+      desc = libraryDescription
+      gpg {
+        sign = true //Determines whether to GPG sign the files. The default is false
+        passphrase = properties.getProperty("bintray.gpg.password")
+        //Optional. The passphrase for GPG signing'
+      }
     }
+  }
 }
