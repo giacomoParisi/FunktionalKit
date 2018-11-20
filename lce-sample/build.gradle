@@ -43,6 +43,9 @@ dependencies {
     implementation Libs.arrow_data
     implementation Libs.arrow_instances_core
     implementation Libs.arrow_instances_data
+    implementation Libs.arrow_effects
+    implementation Libs.arrow_effects_kotlinx_coroutines
+    implementation Libs.arrow_effects_kotlinx_coroutines_instances
     kapt Libs.arrow_annotations_processor
 
     /* ==== EXTENSIONS ==== */

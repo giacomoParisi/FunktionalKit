@@ -29,7 +29,7 @@ object Versions {
     const val gradle_bintray_plugin: String = "1.8.4" 
 
     const val io_arrow_kt: String =
-            "0.8.0" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "0.8.1" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val jmfayard_github_io_gradle_kotlin_dsl_libs_gradle_plugin: String = "0.2.6" 
 
