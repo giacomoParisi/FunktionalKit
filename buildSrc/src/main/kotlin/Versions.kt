@@ -1,5 +1,3 @@
-import kotlin.String
-
 /**
  * Find which updates are available by running
  *     `$ ./gradlew syncLibs`
@@ -24,7 +22,7 @@ object Versions {
     const val android_maven_gradle_plugin: String = "2.1" 
 
     const val com_github_giacomoparisi_kotlin_functional_extensions: String =
-            "ac4c27f595" // No update information. Is this dependency available on jcenter or mavenCentral?
+            "4feba485ce" // No update information. Is this dependency available on jcenter or mavenCentral?
 
     const val gradle_bintray_plugin: String = "1.8.4" 
 
