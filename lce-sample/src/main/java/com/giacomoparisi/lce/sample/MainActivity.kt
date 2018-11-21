@@ -2,28 +2,23 @@ package com.giacomoparisi.lce.sample
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import arrow.core.Option
 import arrow.core.some
 import arrow.syntax.function.pipe
 import com.giacomoparisi.kotlin.functional.extensions.android.toast.showLongToast
-import com.giacomoparisi.lce.android.LceErrorSettings
-import com.giacomoparisi.lce.android.LceLoadingSettings
-import com.giacomoparisi.lce.android.LceSettings
+import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.giacomoparisi.lce.android.LceWrapper
+import com.giacomoparisi.lce.android.getLceSettings
 import com.giacomoparisi.lce.live.data.LiveDataLce
 import com.giacomoparisi.lce.live.data.execute
 import com.giacomoparisi.lce.live.data.liveDataLce
 import com.giacomoparisi.lce.live.data.observe
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.error.view.*
 import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
-
-    private val loadingSettings = LceLoadingSettings(R.layout.loading.some()).some()
-    private val errorSettings = LceErrorSettings(onError = { _: Throwable, message: String, _: Option<View> -> this.showLongToast(message) }.some()).some()
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +26,12 @@ class MainActivity : AppCompatActivity() {
 
         val rootLceWrapper = LceWrapper(
                 FrameLayout(this),
-                LceSettings(loadingSettings, errorSettings)
+                getLceSettings(
+                        R.layout.loading,
+                        R.layout.error,
+                        onError = { _, _, errorView, lceWrapper ->
+                            errorView.ifSome { it.ok.setOnClickListener { lceWrapper.idle() } }
+                        })
         )
 
         rootLceWrapper.addToRoot(this.layoutInflater.inflate(

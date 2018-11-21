@@ -5,10 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import arrow.core.None
 import arrow.core.Option
-import arrow.core.fix
-import arrow.instances.option.monad.monad
 import arrow.syntax.function.pipe
-import arrow.typeclasses.binding
 import com.giacomoparisi.kotlin.functional.extensions.android.view.visibleOrGone
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.giacomoparisi.lce.core.Lce
@@ -29,26 +26,20 @@ class LceWrapper<V : ViewGroup>(private val _root: V, private val _settings: Lce
         )
         val inflater = LayoutInflater.from(this._root.context)
 
-        this._loading = Option.monad().binding {
-            this@LceWrapper._settings.loading
-                    .bind()
-                    .loadingLayoutId
-                    .bind()
-                    .pipe { inflater.inflate(it, this@LceWrapper._root, false) }
-                    .also { this@LceWrapper._root.addView(it, params) }
-        }.fix()
+        this._loading = this@LceWrapper._settings.loading
+                .loadingLayoutId
+                .map { layoutId ->
+                    inflater.inflate(layoutId, this@LceWrapper._root, false)
+                            .also { this@LceWrapper._root.addView(it, params) }
+                }
 
 
-        this._error = Option.monad().binding {
-            this@LceWrapper._settings.error
-                    .bind()
-                    .errorLayoutId
-                    .bind()
-                    .pipe { inflater.inflate(it, this@LceWrapper._root, false) }
-                    .also { this@LceWrapper._root.addView(it, params) }
-        }.fix()
-
-        this.apply(Lce.Idle)
+        this._error = this@LceWrapper._settings.error
+                .errorLayoutId
+                .map { layoutId ->
+                    inflater.inflate(layoutId, this@LceWrapper._root, false)
+                            .also { this@LceWrapper._root.addView(it, params) }
+                }
     }
 
     fun addToRoot(view: View): View =
@@ -57,6 +48,7 @@ class LceWrapper<V : ViewGroup>(private val _root: V, private val _settings: Lce
                     ViewGroup.LayoutParams.MATCH_PARENT)
                     .pipe { this._root.addView(view, 0, it) }
                     .pipe { this._root }
+                    .also { this.apply(Lce.Idle) }
 
 
     private fun isEqualAtRootIndex(view: Option<View>, index: Int): Boolean =
@@ -67,37 +59,44 @@ class LceWrapper<V : ViewGroup>(private val _root: V, private val _settings: Lce
             is Lce.Loading -> {
                 for (i in 0 until this._root.childCount) {
                     this._root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i)
-                            .or(!isEqualAtRootIndex(this._error, i)))
+                            .or(isEqualAtRootIndex(this._error, i).not()))
                 }
-                this._settings.loading.ifSome { it.onLoading.ifSome { it(this._loading) } }
+                this._settings.loading.onLoading.ifSome { it(this._loading) }
             }
             is Lce.Success -> {
                 for (i in 0 until this._root.childCount) {
-                    this._root.getChildAt(i).visibleOrGone(!isEqualAtRootIndex(this._loading, i)
-                            .and(!isEqualAtRootIndex(this._error, i)))
+                    this._root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i)
+                            .not()
+                            .and(isEqualAtRootIndex(this._error, i).not()))
                 }
             }
             is Lce.Error -> {
                 for (i in 0 until this._root.childCount) {
-                    this._root.getChildAt(i).visibleOrGone(!isEqualAtRootIndex(this._loading, i)
+                    this._root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i)
+                            .not()
                             .or(isEqualAtRootIndex(this._error, i)))
                 }
-                this._settings.error.ifSome {
-                    it.onError.ifSome {
-                        it(
-                                lce.throwable,
-                                lce.message,
-                                this._error
-                        )
-                    }
+                this._settings.error
+                        .onError.ifSome {
+                    it(
+                            lce.throwable,
+                            lce.message,
+                            this._error,
+                            this
+                    )
                 }
             }
             is Lce.Idle -> {
                 for (i in 0 until this._root.childCount) {
-                    this._root.getChildAt(i).visibleOrGone(!isEqualAtRootIndex(this._loading, i)
-                            .and(!isEqualAtRootIndex(this._error, i)))
+                    this._root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i)
+                            .not()
+                            .and(isEqualAtRootIndex(this._error, i).not()))
                 }
             }
         }
+    }
+
+    fun idle() {
+        this.apply(Lce.Idle)
     }
 }
