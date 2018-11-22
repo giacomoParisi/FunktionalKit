@@ -47,7 +47,7 @@ object Versions {
 
         const val currentVersion: String = "4.10.2"
 
-        const val nightlyVersion: String = "5.1-20181120000042+0000"
+        const val nightlyVersion: String = "5.1-20181122000031+0000"
 
         const val releaseCandidate: String = "5.0-rc-4"
     }
