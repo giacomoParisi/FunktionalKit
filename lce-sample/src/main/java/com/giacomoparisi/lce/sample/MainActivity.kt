@@ -2,6 +2,7 @@ package com.giacomoparisi.lce.sample
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import arrow.core.some
@@ -34,10 +35,17 @@ class MainActivity : AppCompatActivity() {
                         })
         )
 
+        val idLceWrapper = LceWrapper(
+                FrameLayout(this),
+                getLceSettings(
+                        R.layout.loading,
+                        null)
+        )
+
         rootLceWrapper.addToRoot(this.layoutInflater.inflate(
                 R.layout.activity_main,
                 null
-        )).pipe { this.setContentView(it) }
+        )).pipe { idLceWrapper.addToViewWithId(it as ViewGroup, R.id.loading_id) }.pipe { this.setContentView(it) }
 
         this.root_loading_success.setOnClickListener { _ ->
             liveDataLce {
@@ -83,6 +91,18 @@ class MainActivity : AppCompatActivity() {
                         }
             }
         }
+
+        this.loading_id.setOnClickListener { _ ->
+            liveDataLce {
+                delay(5000)
+                "Completed".some()
+            }.pipe { result ->
+                result.also { it.execute { } }
+                        .also { it.observe(this, { idLceWrapper.apply(it) }, { showSuccess() }) }
+            }
+        }
+
+
     }
 
     private fun <R> observeOnRoot(liveDataLce: LiveDataLce<R>, lceWrapper: LceWrapper<*>) {

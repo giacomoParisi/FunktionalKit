@@ -1,3 +1,5 @@
+import kotlin.String
+
 /**
  * Find which updates are available by running
  *     `$ ./gradlew syncLibs`
@@ -6,6 +8,8 @@
  * YOU are responsible for updating manually the dependency version. */
 object Versions {
     const val appcompat: String = "1.0.2" 
+
+    const val constraintlayout: String = "1.1.3" 
 
     const val androidx_core_core: String = "1.0.1" 
 
@@ -45,10 +49,10 @@ object Versions {
     object Gradle {
         const val runningVersion: String = "4.10.2"
 
-        const val currentVersion: String = "4.10.2"
+        const val currentVersion: String = "5.0"
 
-        const val nightlyVersion: String = "5.1-20181122000031+0000"
+        const val nightlyVersion: String = "5.1-20181130102259+0000"
 
-        const val releaseCandidate: String = "5.0-rc-4"
+        const val releaseCandidate: String = ""
     }
 }
