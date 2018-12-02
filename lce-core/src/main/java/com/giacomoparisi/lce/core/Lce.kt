@@ -1,8 +1,6 @@
 package com.giacomoparisi.lce.core
 
-import arrow.core.None
-import arrow.core.Option
-import arrow.core.toOption
+import arrow.effects.DeferredK
 
 /**
  * Created by Giacomo Parisi on 16/07/18.
@@ -10,25 +8,16 @@ import arrow.core.toOption
  */
 sealed class Lce<out T> {
 
-    abstract fun <R> map(f: (Option<T>) -> R): Lce<R>
-
-    open val data: Option<T> get() = None
-
-    data class Success<out T>(override val data: Option<T>) : Lce<T>() {
-        override fun <R> map(f: (Option<T>) -> R): Lce<R> = Success(f(data).toOption())
-    }
+    data class Success<out T>(val data: T) : Lce<T>()
 
     data class Error(val throwable: Throwable, val message: String) : Lce<Nothing>() {
         constructor(t: Throwable) : this(t, t.message ?: "")
-
-        override fun <R> map(f: (Option<Nothing>) -> R): Lce<R> = this
     }
 
-    object Loading : Lce<Nothing>() {
-        override fun <R> map(f: (Option<Nothing>) -> R): Lce<R> = this
-    }
+    object Loading : Lce<Nothing>()
 
-    object Idle : Lce<Nothing>() {
-        override fun <R> map(f: (Option<Nothing>) -> R): Lce<R> = this
-    }
+    data class Idle<T>(val provider: DeferredK<T>) : Lce<T>()
 }
+
+fun <T> lce(provider: suspend () -> T) =
+        Lce.Idle(DeferredK.defer(f = { provider() }))

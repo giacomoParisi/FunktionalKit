@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 apply from: '../library.gradle'
+apply from: rootProject.file('gradle/generated-kotlin-sources.gradle')
 
 android {
     compileSdkVersion 28

@@ -23,13 +23,6 @@
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/root_loading_error_not_handled"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="root loading error not handled"
-        tools:ignore="HardcodedText" />
-
-    <Button
         android:id="@+id/root_loading_dispose"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
