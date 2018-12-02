@@ -44,10 +44,10 @@ class MainActivity : AppCompatActivity() {
                         null)
         )
 
-        rootLceWrapper.addToRoot(this.layoutInflater.inflate(
-                R.layout.activity_main,
-                null
-        )).pipe { idLceWrapper.addToViewWithId(it as ViewGroup, R.id.loading_id) }.pipe { this.setContentView(it) }
+        this.layoutInflater.inflate(R.layout.activity_main, null)
+                .pipe { rootLceWrapper.addToRoot(it) }
+                .pipe { idLceWrapper.addToViewWithId(it as ViewGroup, R.id.loading_id) }
+                .pipe { this.setContentView(it) }
 
         this.root_loading_success.setOnClickListener {
             lce { delay(3000) }
