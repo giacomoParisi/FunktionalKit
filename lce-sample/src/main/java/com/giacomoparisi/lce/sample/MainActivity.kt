@@ -1,6 +1,7 @@
 package com.giacomoparisi.lce.sample
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -23,54 +24,40 @@ import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
 
+    private val rootLceWrapper: LceWrapper = getLceWrapper(this)
+    private val idLceWrapper: LceWrapper = getLceWrapper(this)
+
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val rootLceWrapper = LceWrapper(
-                FrameLayout(this),
-                FrameLayout(this),
-                getLceSettings(
-                        R.layout.loading,
-                        R.layout.error,
-                        onError = { _, _, errorView, lceWrapper ->
-                            errorView.ifSome { it.ok.setOnClickListener { lceWrapper.idle() } }
-                        })
-        )
-
-        val idLceWrapper = LceWrapper(
-                FrameLayout(this),
-                FrameLayout(this),
-                getLceSettings(
-                        R.layout.loading,
-                        null)
-        )
-
         this.layoutInflater.inflate(R.layout.activity_main, null)
-                .pipe { rootLceWrapper.attachLoadingTo(it) }
-                .pipe { rootLceWrapper.attachErrorTo(it) }
-                .pipe { idLceWrapper.attachLoadingToId(it as ViewGroup, R.id.loading_id) }
-                .pipe { idLceWrapper.attachErrorTo(it) }
+                .also { this.rootLceWrapper.build() }
+                .also { this.idLceWrapper.build() }
+                .pipe { this.rootLceWrapper.attachErrorToViewAndWrap(it as ViewGroup, FrameLayout(this)) }
+                .pipe { this.rootLceWrapper.attachLoadingToView(it) }
+                .pipe { this.idLceWrapper.attachErrorToView(it) }
+                .pipe { this.idLceWrapper.attachLoadingToIdAndWrap(R.id.loading_id, it, FrameLayout(this)) }
                 .pipe { this.setContentView(it) }
 
         this.root_loading_success.setOnClickListener {
             lce { delay(3000) }
                     .liveDataLce()
-                    .observe(this, rootLceWrapper, { showSuccess() }, { showError() })
+                    .observe(this, listOf(rootLceWrapper), { showSuccess() }, { showError() })
                     .execute()
         }
 
         this.root_loading_error.setOnClickListener {
             lce { delay(3000).pipe { throw Throwable() } }
                     .liveDataLce()
-                    .observe(this, rootLceWrapper, { showSuccess() }, { showError() })
+                    .observe(this, listOf(rootLceWrapper), { showSuccess() }, { showError() })
                     .execute()
         }
 
         this.root_loading_dispose.setOnClickListener {
             val lce = lce { delay(5000) }
                     .liveDataLce()
-                    .observe(this, rootLceWrapper, { showSuccess() }, { showError() }, { showCancel() })
+                    .observe(this, listOf(rootLceWrapper), { showSuccess() }, { showError() }, { showCancel() })
                     .execute()
 
             DeferredK.defer(f = {
@@ -81,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         this.loading_id.setOnClickListener {
             lce { delay(3000) }
                     .liveDataLce()
-                    .observe(this, idLceWrapper, { showSuccess() }, { showError() }, { showCancel() })
+                    .observe(this, listOf(idLceWrapper), { showSuccess() }, { showError() }, { showCancel() })
                     .execute()
         }
     }
@@ -97,5 +84,16 @@ class MainActivity : AppCompatActivity() {
     private fun showCancel() {
         this.showLongToast("Cancel")
     }
+
+    private fun getLceWrapper(context: Context) =
+            LceWrapper(
+                    getLceSettings(
+                            R.layout.loading,
+                            R.layout.error,
+                            onError = { _, _, errorView, lceWrapper ->
+                                errorView.ifSome { it.ok.setOnClickListener { lceWrapper.idle() } }
+                            }),
+                    context
+            )
 }
 

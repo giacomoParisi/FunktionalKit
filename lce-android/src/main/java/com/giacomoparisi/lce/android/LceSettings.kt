@@ -16,7 +16,7 @@ data class LceErrorSettings(
                 throwable: Throwable,
                 errorMessage: String,
                 errorView: Option<View>,
-                lceWrapper: LceWrapper<*>
+                lceWrapper: LceWrapper
         ) -> Unit> = None
 )
 
@@ -29,7 +29,7 @@ fun getLceSettings(
         loadingLayoutId: Int? = null,
         errorLayoutId: Int? = null,
         onLoading: ((loadingView: Option<View>) -> Unit)? = null,
-        onError: ((throwable: Throwable, errorMessage: String, errorView: Option<View>, LceWrapper<*>) -> Unit)? = null
+        onError: ((throwable: Throwable, errorMessage: String, errorView: Option<View>, LceWrapper) -> Unit)? = null
 ) =
         LceSettings(
                 LceLoadingSettings(loadingLayoutId.toOption(), onLoading.toOption()),

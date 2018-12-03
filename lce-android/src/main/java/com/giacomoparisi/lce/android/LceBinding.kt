@@ -1,5 +1,6 @@
 package com.giacomoparisi.lce.android
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,123 +14,123 @@ import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.giacomoparisi.lce.core.Lce
 import com.giacomoparisi.lce.core.lce
 
-class LceWrapper<V : ViewGroup>(
-        private val _loadingRoot: V,
-        private val _errorRoot: V,
-        private val _settings: LceSettings
-) {
+class LceWrapper(private val _settings: LceSettings, private val _context: Context) {
 
     private var _loading: Option<View> = None
     private var _error: Option<View> = None
 
-    init {
-        this.buildView()
-    }
-
-    private fun buildView() {
-        val params = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        val inflater = LayoutInflater.from(this._loadingRoot.context)
-
+    fun build() {
+        val inflater = LayoutInflater.from(this._context)
         this._loading = this@LceWrapper._settings.loading
                 .loadingLayoutId
                 .map { layoutId ->
-                    inflater.inflate(layoutId, this@LceWrapper._loadingRoot, false)
-                            .also { this@LceWrapper._loadingRoot.addView(it, params) }
+                    inflater.inflate(layoutId, null, false)
                 }
 
 
         this._error = this@LceWrapper._settings.error
                 .errorLayoutId
                 .map { layoutId ->
-                    inflater.inflate(layoutId, this@LceWrapper._errorRoot, false)
-                            .also { this@LceWrapper._errorRoot.addView(it, params) }
+                    inflater.inflate(layoutId, null, false)
                 }
     }
 
-    fun attachLoadingTo(view: View) =
-            this.attach(view, this._loadingRoot)
+    fun attachLoadingToView(toView: ViewGroup) =
+            this._loading.fold({ toView }) { this.attachToView(it, toView) }
 
-    fun attachErrorTo(view: View) =
-            this.attach(view, this._errorRoot)
+    fun attachLoadingToViewAndWrap(toView: ViewGroup, container: ViewGroup) =
+            this._loading.fold({ toView }) { this.attachToViewAndWrap(it, toView, container) }
 
-    fun attachLoadingToId(view: View, @IdRes id: Int) =
-            this.attachToViewWithId(view, id, this._loadingRoot)
+    fun attachErrorToView(toView: ViewGroup) =
+            this._error.fold({ toView }) { this.attachToView(it, toView) }
 
-    fun attachErrorToId(view: View, @IdRes id: Int) =
-            this.attachToViewWithId(view, id, this._loadingRoot)
+    fun attachErrorToViewAndWrap(toView: ViewGroup, container: ViewGroup) =
+            this._error.fold({ toView }) { this.attachToViewAndWrap(it, toView, container) }
+
+    fun attachLoadingToId(@IdRes id: Int, toView: ViewGroup) =
+            this._loading.fold({ toView }) { this.attachToViewWithId(it, id, toView) }
+
+    fun attachLoadingToIdAndWrap(@IdRes id: Int, toView: ViewGroup, container: ViewGroup) =
+            this._loading.fold({ toView }) { this.attachToViewWithIdAndWrap(it, id, toView, container) }
+
+    fun attachErrorToId(@IdRes id: Int, toView: ViewGroup) =
+            this._loading.fold({ toView }) { this.attachToViewWithId(it, id, toView) }
+
+    fun attachErrorToIdAndWrap(@IdRes id: Int, toView: ViewGroup, container: ViewGroup) =
+            this._loading.fold({ toView }) { this.attachToViewWithIdAndWrap(it, id, toView, container) }
 
 
-    private fun attach(view: View, root: ViewGroup): View =
+    private fun attachToView(view: View, toView: ViewGroup): ViewGroup =
             ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT)
-                    .pipe { root.addView(view, 0, it) }
-                    .pipe { root }
+                    .pipe { toView.addView(view, it) }
+                    .pipe { toView }
                     .also { this.apply(lce { }) }
 
-    private fun attachToViewWithId(view: View, @IdRes id: Int, root: ViewGroup): View =
-            (view.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
+    private fun attachToViewAndWrap(view: View, toView: View, container: ViewGroup): ViewGroup =
+            ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT)
+                    .also { container.addView(toView, it) }
+                    .pipe { container.addView(view, it) }
+                    .pipe { container }
+                    .also { this.apply(lce { }) }
+
+    private fun attachToViewWithIdAndWrap(view: View, @IdRes id: Int, toView: ViewGroup, container: ViewGroup): ViewGroup =
+            (toView.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
                 val index = it.indexOfChild(view)
-                val wrapView = view.findViewById<View>(id)
+                val wrapView = toView.findViewById<View>(id)
                 it.removeView(wrapView)
-                it.addView(root, index, wrapView.layoutParams)
+                it.addView(container, index, wrapView.layoutParams)
                 val childParams = ViewGroup.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                 )
-                root.addView(wrapView, 0, childParams)
-            }.pipe { view }.also { this.apply(lce { }) }
+                container.addView(wrapView, 0, childParams)
+                container.addView(view, childParams)
+            }.pipe { toView }.also { this.apply(lce { }) }
 
-
-    private fun isEqualAtRootIndex(view: Option<View>, index: Int, root: ViewGroup): Boolean =
-            root.getChildAt(index) == view.orNull()
+    private fun attachToViewWithId(view: View, @IdRes id: Int, toView: ViewGroup): ViewGroup =
+            (toView.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
+                val childParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                it.addView(view, childParams)
+            }.pipe { toView }.also { this.apply(lce { }) }
 
     fun apply(lce: Lce<*>) {
         when (lce) {
             is Lce.Loading -> {
-                this.applyLoading(this._loadingRoot)
-                this.applyLoading(this._errorRoot)
+                this.applyLoading()
             }
             is Lce.Success -> {
-                this.applySuccess(this._loadingRoot)
-                this.applySuccess(this._errorRoot)
+                this.applySuccess()
             }
             is Lce.Error -> {
-                this.applyError(this._loadingRoot, lce)
-                this.applyError(this._errorRoot, lce)
+                this.applyError(lce)
             }
             is Lce.Idle -> {
-                this.applyIdle(this._loadingRoot)
-                this.applyIdle(this._errorRoot)
+                this.applyIdle()
             }
         }
     }
 
-    private fun applyLoading(root: ViewGroup) {
-        for (i in 0 until root.childCount) {
-            this._loadingRoot.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i, root)
-                    .or(isEqualAtRootIndex(this._error, i, root).not()))
-        }
+    private fun applyLoading() {
+        this._loading.ifSome { it.visibleOrGone(true) }
+        this._error.ifSome { it.visibleOrGone(false) }
         this._settings.loading.onLoading.ifSome { it(this._loading) }
     }
 
-    private fun applySuccess(root: ViewGroup) {
-        for (i in 0 until root.childCount) {
-            root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i, root)
-                    .not()
-                    .and(isEqualAtRootIndex(this._error, i, root).not()))
-        }
+    private fun applySuccess() {
+        this._loading.ifSome { it.visibleOrGone(false) }
+        this._error.ifSome { it.visibleOrGone(false) }
     }
 
-    private fun applyError(root: ViewGroup, lce: Lce.Error) {
-        for (i in 0 until root.childCount) {
-            root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i, root)
-                    .not()
-                    .or(isEqualAtRootIndex(this._error, i, root)))
-        }
+    private fun applyError(lce: Lce.Error) {
+        this._loading.ifSome { it.visibleOrGone(false) }
+        this._error.ifSome { it.visibleOrGone(true) }
         this._settings.error
                 .onError.ifSome {
             it(
@@ -141,12 +142,9 @@ class LceWrapper<V : ViewGroup>(
         }
     }
 
-    private fun applyIdle(root: ViewGroup) {
-        for (i in 0 until root.childCount) {
-            root.getChildAt(i).visibleOrGone(isEqualAtRootIndex(this._loading, i, root)
-                    .not()
-                    .and(isEqualAtRootIndex(this._error, i, root).not()))
-        }
+    private fun applyIdle() {
+        this._loading.ifSome { it.visibleOrGone(false) }
+        this._error.ifSome { it.visibleOrGone(false) }
     }
 
     fun idle() {

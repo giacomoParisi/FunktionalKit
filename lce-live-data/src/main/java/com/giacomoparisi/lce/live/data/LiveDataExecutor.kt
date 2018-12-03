@@ -1,6 +1,5 @@
 package com.giacomoparisi.lce.live.data
 
-import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -47,9 +46,9 @@ private fun <R> getLiveDataDeferred(liveData: MutableLiveData<Lce<R>>, provider:
                     .also { DeferredK(ctx = Dispatchers.Main) { liveData.value = it } }
         }.fix()
 
-fun <R, V : ViewGroup> LiveDataLce<R>.observe(
+fun <R> LiveDataLce<R>.observe(
         owner: LifecycleOwner,
-        lceWrapper: LceWrapper<V>? = null,
+        lceWrapper: List<LceWrapper?>,
         onSuccess: ((R) -> Unit)? = null,
         onError: ((Throwable) -> Unit)? = null,
         onCancel: (() -> Unit)? = null,
@@ -57,7 +56,7 @@ fun <R, V : ViewGroup> LiveDataLce<R>.observe(
 ) =
         this.also {
             this.liveData.observe(owner, Observer { lce ->
-                lceWrapper.toOption().ifSome { wrapper -> wrapper.apply(lce) }
+                lceWrapper.forEach { wrapper -> wrapper.toOption().ifSome { lceWrapper -> lceWrapper.apply(lce) } }
                 when (lce) {
                     is Lce.Success -> onSuccess.toOption().ifSome { it(lce.data) }
                     is Lce.Error -> onError.toOption().ifSome { it(lce.throwable) }
