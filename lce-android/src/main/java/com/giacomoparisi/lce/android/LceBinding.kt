@@ -14,13 +14,13 @@ import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.giacomoparisi.lce.core.Lce
 import com.giacomoparisi.lce.core.lce
 
-class LceWrapper(private val _settings: LceSettings, private val _context: Context) {
+class LceWrapper(private val _settings: LceSettings) {
 
     private var _loading: Option<View> = None
     private var _error: Option<View> = None
 
-    fun build() {
-        val inflater = LayoutInflater.from(this._context)
+    fun build(context: Context) {
+        val inflater = LayoutInflater.from(context)
         this._loading = this@LceWrapper._settings.loading
                 .loadingLayoutId
                 .map { layoutId ->

@@ -1,7 +1,6 @@
 package com.giacomoparisi.lce.sample
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -24,16 +23,16 @@ import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
 
-    private val rootLceWrapper: LceWrapper = getLceWrapper(this)
-    private val idLceWrapper: LceWrapper = getLceWrapper(this)
+    private val rootLceWrapper: LceWrapper = getLceWrapper()
+    private val idLceWrapper: LceWrapper = getLceWrapper()
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         this.layoutInflater.inflate(R.layout.activity_main, null)
-                .also { this.rootLceWrapper.build() }
-                .also { this.idLceWrapper.build() }
+                .also { this.rootLceWrapper.build(this) }
+                .also { this.idLceWrapper.build(this) }
                 .pipe { this.rootLceWrapper.attachErrorToViewAndWrap(it as ViewGroup, FrameLayout(this)) }
                 .pipe { this.rootLceWrapper.attachLoadingToView(it) }
                 .pipe { this.idLceWrapper.attachErrorToView(it) }
@@ -85,15 +84,14 @@ class MainActivity : AppCompatActivity() {
         this.showLongToast("Cancel")
     }
 
-    private fun getLceWrapper(context: Context) =
+    private fun getLceWrapper() =
             LceWrapper(
                     getLceSettings(
                             R.layout.loading,
                             R.layout.error,
                             onError = { _, _, errorView, lceWrapper ->
                                 errorView.ifSome { it.ok.setOnClickListener { lceWrapper.idle() } }
-                            }),
-                    context
+                            })
             )
 }
 
