@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val rootLceWrapper = LceWrapper(
                 FrameLayout(this),
+                FrameLayout(this),
                 getLceSettings(
                         R.layout.loading,
                         R.layout.error,
@@ -39,14 +40,17 @@ class MainActivity : AppCompatActivity() {
 
         val idLceWrapper = LceWrapper(
                 FrameLayout(this),
+                FrameLayout(this),
                 getLceSettings(
                         R.layout.loading,
                         null)
         )
 
         this.layoutInflater.inflate(R.layout.activity_main, null)
-                .pipe { rootLceWrapper.addToRoot(it) }
-                .pipe { idLceWrapper.addToViewWithId(it as ViewGroup, R.id.loading_id) }
+                .pipe { rootLceWrapper.attachLoadingTo(it) }
+                .pipe { rootLceWrapper.attachErrorTo(it) }
+                .pipe { idLceWrapper.attachLoadingToId(it as ViewGroup, R.id.loading_id) }
+                .pipe { idLceWrapper.attachErrorTo(it) }
                 .pipe { this.setContentView(it) }
 
         this.root_loading_success.setOnClickListener {
