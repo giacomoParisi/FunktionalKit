@@ -65,7 +65,7 @@ class LceWrapper(private val _settings: LceSettings) {
                     .pipe { toView }
                     .also { this.apply(lce { }) }
 
-    private fun attachToViewAndWrap(view: View, toView: View, container: ViewGroup, wrapContent: Boolean = false): ViewGroup =
+    private fun attachToViewAndWrap(view: View, toView: View, container: ViewGroup): ViewGroup =
             container.addView(toView)
                     .pipe { container.addView(view) }
                     .pipe { container }
@@ -73,7 +73,7 @@ class LceWrapper(private val _settings: LceSettings) {
 
     private fun attachToViewWithIdAndWrap(view: View, @IdRes id: Int, toView: ViewGroup, container: ViewGroup): ViewGroup =
             (toView.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
-                val index = it.indexOfChild(view)
+                val index = it.indexOfChild(toView.findViewById<View>(id))
                 val wrapView = toView.findViewById<View>(id)
                 it.removeView(wrapView)
                 it.addView(container, index)
