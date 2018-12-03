@@ -48,15 +48,31 @@ private fun <R> getLiveDataDeferred(liveData: MutableLiveData<Lce<R>>, provider:
 
 fun <R> LiveDataLce<R>.observe(
         owner: LifecycleOwner,
-        lceWrapper: List<LceWrapper?>,
+        lceWrapper: LceWrapper?,
         onSuccess: ((R) -> Unit)? = null,
         onError: ((Throwable) -> Unit)? = null,
         onCancel: (() -> Unit)? = null,
         onLoading: (() -> Unit)? = null
-) =
+): LiveDataLce<R> = this.observe(
+        owner,
+        lceWrapper.toOption().fold({ emptyList<LceWrapper>() }) { listOf(it) },
+        onSuccess,
+        onError,
+        onCancel,
+        onLoading
+)
+
+fun <R> LiveDataLce<R>.observe(
+        owner: LifecycleOwner,
+        lceWrappers: List<LceWrapper>,
+        onSuccess: ((R) -> Unit)? = null,
+        onError: ((Throwable) -> Unit)? = null,
+        onCancel: (() -> Unit)? = null,
+        onLoading: (() -> Unit)? = null
+): LiveDataLce<R> =
         this.also {
             this.liveData.observe(owner, Observer { lce ->
-                lceWrapper.forEach { wrapper -> wrapper.toOption().ifSome { lceWrapper -> lceWrapper.apply(lce) } }
+                lceWrappers.forEach { wrapper -> wrapper.apply(lce) }
                 when (lce) {
                     is Lce.Success -> onSuccess.toOption().ifSome { it(lce.data) }
                     is Lce.Error -> onError.toOption().ifSome { it(lce.throwable) }
