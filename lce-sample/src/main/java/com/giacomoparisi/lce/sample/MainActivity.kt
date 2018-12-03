@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 .pipe { this.rootLceWrapper.attachErrorToViewAndWrap(it as ViewGroup, FrameLayout(this)) }
                 .pipe { this.rootLceWrapper.attachLoadingToView(it) }
                 .pipe { this.idLceWrapper.attachErrorToView(it) }
-                .pipe { this.idLceWrapper.attachLoadingToIdAndWrap(R.id.loading_id, it, FrameLayout(this)) }
+                .pipe { this.idLceWrapper.attachLoadingToIdAndWrap(R.id.loading_id, it, this.layoutInflater.inflate(R.layout.linear_wrapper, null) as ViewGroup) }
                 .pipe { this.setContentView(it) }
 
         this.root_loading_success.setOnClickListener {

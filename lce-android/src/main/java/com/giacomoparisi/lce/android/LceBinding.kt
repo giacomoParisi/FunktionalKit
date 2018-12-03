@@ -61,19 +61,13 @@ class LceWrapper(private val _settings: LceSettings) {
 
 
     private fun attachToView(view: View, toView: ViewGroup): ViewGroup =
-            ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT)
-                    .pipe { toView.addView(view, it) }
+            toView.addView(view)
                     .pipe { toView }
                     .also { this.apply(lce { }) }
 
-    private fun attachToViewAndWrap(view: View, toView: View, container: ViewGroup): ViewGroup =
-            ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT)
-                    .also { container.addView(toView, it) }
-                    .pipe { container.addView(view, it) }
+    private fun attachToViewAndWrap(view: View, toView: View, container: ViewGroup, wrapContent: Boolean = false): ViewGroup =
+            container.addView(toView)
+                    .pipe { container.addView(view) }
                     .pipe { container }
                     .also { this.apply(lce { }) }
 
@@ -82,22 +76,14 @@ class LceWrapper(private val _settings: LceSettings) {
                 val index = it.indexOfChild(view)
                 val wrapView = toView.findViewById<View>(id)
                 it.removeView(wrapView)
-                it.addView(container, index, wrapView.layoutParams)
-                val childParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                container.addView(wrapView, 0, childParams)
-                container.addView(view, childParams)
+                it.addView(container, index)
+                container.addView(wrapView, 0)
+                container.addView(view)
             }.pipe { toView }.also { this.apply(lce { }) }
 
     private fun attachToViewWithId(view: View, @IdRes id: Int, toView: ViewGroup): ViewGroup =
             (toView.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
-                val childParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                )
-                it.addView(view, childParams)
+                it.addView(view)
             }.pipe { toView }.also { this.apply(lce { }) }
 
     fun apply(lce: Lce<*>) {
