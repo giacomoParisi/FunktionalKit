@@ -35,29 +35,31 @@ class LceWrapper(private val _settings: LceSettings) {
                 }
     }
 
+    data class WrappedView(val root: ViewGroup, val container: ViewGroup)
+
     fun attachLoadingToView(toView: ViewGroup) =
             this._loading.fold({ toView }) { this.attachToView(it, toView) }
 
     fun attachLoadingToViewAndWrap(toView: ViewGroup, container: ViewGroup) =
-            this._loading.fold({ toView }) { this.attachToViewAndWrap(it, toView, container) }
+            this._loading.fold({ WrappedView(toView, container)  }) { this.attachToViewAndWrap(it, toView, container) }
 
     fun attachErrorToView(toView: ViewGroup) =
             this._error.fold({ toView }) { this.attachToView(it, toView) }
 
     fun attachErrorToViewAndWrap(toView: ViewGroup, container: ViewGroup) =
-            this._error.fold({ toView }) { this.attachToViewAndWrap(it, toView, container) }
+            this._error.fold({ WrappedView(toView, container)  }) { this.attachToViewAndWrap(it, toView, container) }
 
     fun attachLoadingToId(@IdRes id: Int, toView: ViewGroup) =
             this._loading.fold({ toView }) { this.attachToViewWithId(it, id, toView) }
 
     fun attachLoadingToIdAndWrap(@IdRes id: Int, toView: ViewGroup, container: ViewGroup) =
-            this._loading.fold({ toView }) { this.attachToViewWithIdAndWrap(it, id, toView, container) }
+            this._loading.fold({ WrappedView(toView, container) }) { this.attachToViewWithIdAndWrap(it, id, toView, container) }
 
     fun attachErrorToId(@IdRes id: Int, toView: ViewGroup) =
-            this._loading.fold({ toView }) { this.attachToViewWithId(it, id, toView) }
+            this._error.fold({ toView }) { this.attachToViewWithId(it, id, toView) }
 
     fun attachErrorToIdAndWrap(@IdRes id: Int, toView: ViewGroup, container: ViewGroup) =
-            this._loading.fold({ toView }) { this.attachToViewWithIdAndWrap(it, id, toView, container) }
+            this._error.fold({ WrappedView(toView, container) }) { this.attachToViewWithIdAndWrap(it, id, toView, container) }
 
 
     private fun attachToView(view: View, toView: ViewGroup): ViewGroup =
@@ -65,13 +67,13 @@ class LceWrapper(private val _settings: LceSettings) {
                     .pipe { toView }
                     .also { this.apply(lce { }) }
 
-    private fun attachToViewAndWrap(view: View, toView: View, container: ViewGroup): ViewGroup =
+    private fun attachToViewAndWrap(view: View, toView: ViewGroup, container: ViewGroup): WrappedView =
             container.addView(toView)
                     .pipe { container.addView(view) }
-                    .pipe { container }
+                    .pipe { WrappedView(toView, container)  }
                     .also { this.apply(lce { }) }
 
-    private fun attachToViewWithIdAndWrap(view: View, @IdRes id: Int, toView: ViewGroup, container: ViewGroup): ViewGroup =
+    private fun attachToViewWithIdAndWrap(view: View, @IdRes id: Int, toView: ViewGroup, container: ViewGroup): WrappedView =
             (toView.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
                 val index = it.indexOfChild(toView.findViewById<View>(id))
                 val wrapView = toView.findViewById<View>(id)
@@ -79,7 +81,7 @@ class LceWrapper(private val _settings: LceSettings) {
                 it.addView(container, index)
                 container.addView(wrapView, 0)
                 container.addView(view)
-            }.pipe { toView }.also { this.apply(lce { }) }
+            }.pipe { WrappedView(toView, container) }.also { this.apply(lce { }) }
 
     private fun attachToViewWithId(view: View, @IdRes id: Int, toView: ViewGroup): ViewGroup =
             (toView.findViewById<View>(id).parent as? ViewGroup).toOption().ifSome {
