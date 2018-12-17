@@ -19,7 +19,11 @@ class LceWrapper(private val _settings: LceSettings) {
     private var _loading: Option<View> = None
     private var _error: Option<View> = None
 
+    lateinit var context: Context
+        private set
+
     fun build(context: Context) {
+        this.context = context
         val inflater = LayoutInflater.from(context)
         this._loading = this@LceWrapper._settings.loading
                 .loadingLayoutId
@@ -41,13 +45,13 @@ class LceWrapper(private val _settings: LceSettings) {
             this._loading.fold({ toView }) { this.attachToView(it, toView) }
 
     fun attachLoadingToViewAndWrap(toView: ViewGroup, container: ViewGroup) =
-            this._loading.fold({ WrappedView(toView, container)  }) { this.attachToViewAndWrap(it, toView, container) }
+            this._loading.fold({ WrappedView(toView, container) }) { this.attachToViewAndWrap(it, toView, container) }
 
     fun attachErrorToView(toView: ViewGroup) =
             this._error.fold({ toView }) { this.attachToView(it, toView) }
 
     fun attachErrorToViewAndWrap(toView: ViewGroup, container: ViewGroup) =
-            this._error.fold({ WrappedView(toView, container)  }) { this.attachToViewAndWrap(it, toView, container) }
+            this._error.fold({ WrappedView(toView, container) }) { this.attachToViewAndWrap(it, toView, container) }
 
     fun attachLoadingToId(@IdRes id: Int, toView: ViewGroup) =
             this._loading.fold({ toView }) { this.attachToViewWithId(it, id, toView) }
@@ -70,7 +74,7 @@ class LceWrapper(private val _settings: LceSettings) {
     private fun attachToViewAndWrap(view: View, toView: ViewGroup, container: ViewGroup): WrappedView =
             container.addView(toView)
                     .pipe { container.addView(view) }
-                    .pipe { WrappedView(toView, container)  }
+                    .pipe { WrappedView(toView, container) }
                     .also { this.apply(lce { }) }
 
     private fun attachToViewWithIdAndWrap(view: View, @IdRes id: Int, toView: ViewGroup, container: ViewGroup): WrappedView =
