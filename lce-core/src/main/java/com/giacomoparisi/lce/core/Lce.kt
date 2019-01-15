@@ -20,4 +20,4 @@ sealed class Lce<out T> {
 }
 
 fun <T> lce(provider: suspend () -> T) =
-        Lce.Idle(DeferredK.invoke { provider })
+        Lce.Idle(DeferredK.invoke { provider() })
