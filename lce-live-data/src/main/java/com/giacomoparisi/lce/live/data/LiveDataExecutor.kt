@@ -14,7 +14,6 @@ import arrow.effects.deferredk.monadDefer.monadDefer
 import arrow.effects.handleErrorWith
 import arrow.effects.runAsync
 import arrow.effects.typeclasses.Disposable
-import arrow.effects.typeclasses.bindingCancellable
 import arrow.syntax.function.pipe
 import com.giacomoparisi.kotlin.functional.extensions.arrow.option.ifSome
 import com.giacomoparisi.kotlin.functional.extensions.core.fold
@@ -90,6 +89,6 @@ fun <R> LiveDataLce<R>.execute() =
                                 .fold({ throw throwable })
                                 { DeferredK(ctx = Dispatchers.Main) { Lce.Idle(this.idle.provider).also { idle -> this.liveData.value = idle } } }
                     }
-                    .runAsync(cb = { DeferredK.unit() })
+                    .runAsync(cb = { DeferredK.just(Unit) })
         }
 

@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
         this.layoutInflater.inflate(R.layout.activity_main, null)
                 .also { this.rootLceWrapper.build(this) }
                 .also { this.idLceWrapper.build(this) }
-                .pipe { this.rootLceWrapper.attachErrorToViewAndWrap(it as ViewGroup, FrameLayout(this)) }
+                .pipe { this.rootLceWrapper.attachErrorToViewAndWrap(it as ViewGroup, FrameLayout(this)).container }
                 .pipe { this.rootLceWrapper.attachLoadingToView(it) }
                 .pipe { this.idLceWrapper.attachErrorToView(it) }
-                .pipe { this.idLceWrapper.attachLoadingToIdAndWrap(R.id.loading_id, it, this.layoutInflater.inflate(R.layout.linear_wrapper, null) as ViewGroup) }
+                .pipe { this.idLceWrapper.attachLoadingToIdAndWrap(R.id.loading_id, it, this.layoutInflater.inflate(R.layout.linear_wrapper, null) as ViewGroup).root }
                 .pipe { this.setContentView(it) }
 
         this.root_loading_success.setOnClickListener {
@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity() {
                     .observe(this, listOf(rootLceWrapper), { showSuccess() }, { showError() }, { showCancel() })
                     .execute()
 
-            DeferredK.defer(f = {
+            DeferredK.invoke {
                 DeferredK(ctx = Dispatchers.Main) { lce.disposable() }
-            }).unsafeRunAsync { }
+            }.unsafeRunAsync { }
         }
 
         this.loading_id.setOnClickListener {
